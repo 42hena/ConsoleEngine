@@ -2,9 +2,11 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="Core\Engine.cpp" />
+    <ClCompile Include="Math\Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Engine.h" />
     <ClInclude Include="Core\Core.h" />
+    <ClInclude Include="Math\Vector2.h" />
   </ItemGroup>
 </Project>
