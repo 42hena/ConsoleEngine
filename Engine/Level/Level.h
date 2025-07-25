@@ -3,10 +3,13 @@
 
 #include "Core.h"
 #include <vector>
+#include "RTTI.h"
 
 class Actor;
-class ENGINE_API Level
+class ENGINE_API Level : public RTTI
 {
+	RTTI_DECLARATIONS(Level, RTTI)
+
 #pragma region 특수 맴버 함수
 public:
 	Level();

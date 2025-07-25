@@ -2,9 +2,12 @@
 #define __ACTOR_H__
 
 #include "Math/Vector2.h"
+#include "RTTI.h"
 
-class ENGINE_API Actor
+class ENGINE_API Actor : public RTTI
 {
+	RTTI_DECLARATIONS(Actor, RTTI)
+
 #pragma region 특수 맴버 함수
 public:
 	Actor();

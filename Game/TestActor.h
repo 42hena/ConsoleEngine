@@ -5,6 +5,8 @@
 
 class TestActor : public Actor
 {
+	RTTI_DECLARATIONS(TestActor, Actor)
+
 #pragma region 특수 멤버 함수
 public:
 	TestActor();
