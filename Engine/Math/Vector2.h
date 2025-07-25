@@ -7,8 +7,16 @@ class ENGINE_API Vector2
 {
 public:
 	Vector2(int x = 0, int y = 0);
-	~Vector2()						= default;
-	
+public:
+	Vector2(const Vector2& rhs)				= default;
+	Vector2(Vector2&& rhs)					= default;
+	~Vector2()								= default;
+
+public:
+	Vector2& operator=(const Vector2& rhs)	= default;
+	Vector2& operator=(Vector2&& rhs)		= default;
+
+
 public:
 	Vector2 operator+(const Vector2& rhs) const;
 	Vector2 operator-(const Vector2& rhs) const;
@@ -41,9 +49,11 @@ public:
 	static Vector2 Right;
 	static Vector2 Down;
 
-private:
+#pragma region ¸É¹ö º¯¼ö
+public:
 	int _x = 0;
 	int _y = 0;
+#pragma endregion
 };
 
 #endif
