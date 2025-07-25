@@ -19,6 +19,12 @@ public:
 	Engine& operator=(Engine&&)			= delete;
 #pragma endregion
 	
+#pragma region 클래스 내부 static 함수
+public:
+	static Engine& GetInstance();
+	static Engine* GetRawPtr();
+#pragma endregion
+
 #pragma region KeyState_키_확인_구조체
 	struct KeyState
 	{
@@ -55,6 +61,11 @@ private:
 	void BeginPlay();
 	void Tick(float deltaTime = 0.0f);
 	void Render();
+#pragma endregion
+
+#pragma region static 변수
+private:
+	static Engine* _static_instance;
 #pragma endregion
 
 #pragma region 맴버 변수
