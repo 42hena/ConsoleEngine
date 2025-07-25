@@ -1,12 +1,14 @@
 #include "Level.h"
 #include "Actor/Actor.h"
 
+#include <iostream>
+
 /*
 *		특수 멤버 함수
 */
-
 Level::Level()
 {
+	std::cout << "Level: " << Level::TypeIdClass() << "\n";
 }
 
 Level::~Level()

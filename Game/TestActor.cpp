@@ -9,6 +9,8 @@
 TestActor::TestActor()
 {
 	std::cout << "[TestActor »ý¼º]\n";
+	std::cout << "TestActor: " << TestActor::TypeIdClass() << "\n";
+
 }
 
 TestActor::~TestActor()
@@ -22,7 +24,8 @@ TestActor::~TestActor()
 
 void TestActor::Tick(float deltaTime)
 {
-	Actor::Tick(deltaTime);
+	// Actor::Tick(deltaTime);
+	super::Tick(deltaTime);
 
 	std::cout << "TestActor::Tick. FPS: " << (1.0f / deltaTime) << "\n";
 }
