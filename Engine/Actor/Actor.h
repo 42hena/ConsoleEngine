@@ -16,12 +16,12 @@ enum class Color : int
 
 class ENGINE_API Actor : public RTTI
 {
+	friend class Level;
 	RTTI_DECLARATIONS(Actor, RTTI)
 
 #pragma region 특수 맴버 함수
 public:
-	// Actor() = delete;
-	Actor(const char image = ' ', Color color = Color::Color_White);
+	Actor(const char image = ' ', Color color = Color::Color_White, const Vector2& position = Vector2::Zero);
 	virtual ~Actor();
 #pragma endregion
 
@@ -39,6 +39,8 @@ public:
 	void SetPosition(const Vector2& newPosition);
 	Vector2 Position() const;
 
+	void SetSortingOrder(unsigned int sortingOrder);
+	
 	/*
 	*		인라인 함수
 	*/
@@ -50,8 +52,8 @@ private:
 	Vector2 _position;
 	char	_image = ' ';
 	bool	_hasBeginPlay = false;
-
-	Color _color;
+	Color	_color;
+	unsigned int _sortingOrder = 0;
 #pragma endregion
 };
 

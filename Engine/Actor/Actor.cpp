@@ -5,17 +5,19 @@
 /*
 *		Æ¯¼ö ¸É¹ö ÇÔ¼ö
 */
-Actor::Actor(const char image, Color color)
+Actor::Actor(const char image, Color color, const Vector2& position)
 	: _hasBeginPlay(false),
 	_image(image),
-	_color(color)
+	_color(color),
+	_position(position),
+	_sortingOrder(0)
 {
-	std::cout << "Actor: " << Actor::TypeIdClass() << "\n";
+	// std::cout << "Actor: " << Actor::TypeIdClass() << "\n";
 }
 
 Actor::~Actor()
 {
-	std::cout << "Actor ¼Ò¸ê Å×½ºÆ®:\n";
+	// std::cout << "Actor ¼Ò¸ê Å×½ºÆ®:\n";
 }
 
 /*
@@ -68,4 +70,9 @@ void Actor::SetPosition(const Vector2& newPosition)
 Vector2 Actor::Position() const
 {
 	return _position;
+}
+
+void Actor::SetSortingOrder(unsigned int sortingOrder)
+{
+	_sortingOrder = sortingOrder;
 }
