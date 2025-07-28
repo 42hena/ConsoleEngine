@@ -1,7 +1,15 @@
 #include "Engine.h"
 
-#include <iostream>
 #include "Level/Level.h"
+
+#include <iostream>
+#include <Windows.h>
+
+/*
+*		static 변수 초기화
+*/
+
+Engine* Engine::_static_instance = nullptr;
 
 /*
 *		특수 맴버 함수
@@ -9,6 +17,23 @@
 
 Engine::Engine()
 {
+	_static_instance = this;
+
+	CONSOLE_CURSOR_INFO info;
+	info.bVisible = false;
+	info.dwSize = 1;// 찾아보기
+
+	// 콘솔 커서 끄기
+	SetConsoleCursorInfo(
+		GetStdHandle(STD_OUTPUT_HANDLE),
+		&info
+	);
+
+	// 모든 텍스트 색상이 변경.
+	/*SetConsoleTextAttribute(
+		GetStdHandle(STD_OUTPUT_HANDLE),
+		FOREGROUND_GREEN
+	);*/
 }
 
 Engine::~Engine()
@@ -18,6 +43,16 @@ Engine::~Engine()
 		delete _mainLevel;
 		_mainLevel = nullptr;
 	}
+	std::cout << "Engine 삭제\n";
+}
+
+/*
+*		클래스 내부 static 함수
+*/
+
+Engine& Engine::GetInstance()
+{
+	return *_static_instance;
 }
 
 /*
@@ -61,6 +96,12 @@ void Engine::Run()
 			}
 		}
 	}
+
+	// 정리 작업.
+	SetConsoleTextAttribute(
+		GetStdHandle(STD_OUTPUT_HANDLE),
+		FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED
+	);
 }
 
 bool Engine::GetKey(int keyCode)
@@ -105,10 +146,10 @@ void Engine::ProcessInput()
 		_keyStates[i]._isKeyDown = GetAsyncKeyState(i) & 0x8000;
 	}
 
-	if (GetAsyncKeyState(VK_ESCAPE) & 0x8000)
+	/*if (GetAsyncKeyState(VK_ESCAPE) & 0x8000)
 	{
 		Quit();
-	}
+	}*/
 }
 
 void Engine::BeginPlay()
@@ -140,15 +181,20 @@ void Engine::Tick(float deltaTime)
 		_mainLevel->Tick(deltaTime);
 	}
 
-	if (GetKeyDown(VK_ESCAPE))
+	/*if (GetKeyDown(VK_ESCAPE))
 	{
 		Quit();
-	}
+	}*/
 	//std::cout << "DeltaTime: " << deltaTime << ", FPS: " << (1.0f / deltaTime) << "\n";
 }
 
 void Engine::Render()
 {
+	SetConsoleTextAttribute(
+		GetStdHandle(STD_OUTPUT_HANDLE),
+		FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED
+	);
+
 	if (_mainLevel != nullptr)
 	{
 		_mainLevel->Render();

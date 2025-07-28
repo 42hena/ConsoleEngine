@@ -31,6 +31,11 @@ public:
 	void AddActor(Actor* newActor);	// Level에서 돌아다닐 객체 생성 함수
 #pragma endregion
 
+#pragma region 내부 함수
+private:
+	void SortActorsBySortingOrder();
+#pragma endregion
+
 #pragma region 멤버 변수
 private:
 	std::vector<Actor*> _actors;
