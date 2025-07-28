@@ -52,8 +52,6 @@ Engine::~Engine()
 
 Engine& Engine::GetInstance()
 {
-	//if (_static_instance == nullptr)
-	//	_static_instance = new Engine();
 	return *_static_instance;
 }
 
@@ -183,10 +181,10 @@ void Engine::Tick(float deltaTime)
 		_mainLevel->Tick(deltaTime);
 	}
 
-	if (GetKeyDown(VK_ESCAPE))
+	/*if (GetKeyDown(VK_ESCAPE))
 	{
 		Quit();
-	}
+	}*/
 	//std::cout << "DeltaTime: " << deltaTime << ", FPS: " << (1.0f / deltaTime) << "\n";
 }
 
