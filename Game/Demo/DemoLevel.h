@@ -9,7 +9,4 @@ class DemoLevel : public Level
 public:
 	DemoLevel();
 	virtual ~DemoLevel() override;
-
-public:
-
 };
