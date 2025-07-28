@@ -19,4 +19,4 @@ public:
 #pragma endregion
 };
 
-#endif // __TEST_ACTOR_H__
+#endif
