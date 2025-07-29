@@ -79,7 +79,11 @@ void Level::Render()
 
 void Level::AddActor(Actor* newActor)
 {
+	// 객체 추가
 	_actors.push_back(newActor);
+
+	// 소유권 설정
+	newActor->SetOwner(this);
 }
 
 /*
