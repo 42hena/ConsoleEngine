@@ -18,6 +18,7 @@
 #define IN
 #define OUT
 #define INOUT
+#define ABSTRACT = 0;
 
 // 메모리 정리 함수
 template <typename T>
@@ -26,6 +27,17 @@ void SafeDelete(T*& target)
 	if (target)
 	{
 		delete target;
+		target = nullptr;
+	}
+}
+
+// 메모리 정리 함수
+template <typename T>
+void SafeDeleteArray(T*& target)
+{
+	if (target)
+	{
+		delete[] target;
 		target = nullptr;
 	}
 }
