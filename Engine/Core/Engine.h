@@ -2,6 +2,7 @@
 #define __ENGINE_H__
 
 #include "Core.h"
+#include "Input.h"
 #include <Windows.h>
 
 class Level;
@@ -24,29 +25,15 @@ public:
 	static Engine& GetInstance();
 #pragma endregion
 
-#pragma region KeyState_키_확인_구조체
-	struct KeyState
-	{
-		enum CONST_KEYSTATE
-		{
-			VK_MAX = 255
-		};
-		bool _isKeyDown = false;
-		bool _previousKeyDown = false;
-	};
-#pragma endregion
-
 #pragma region 공개 함수
 public:
 	// 엔진 실행 함수
 	void Run();
 
-	// 키 확인 함수
-	bool GetKey(int keyCode);
-	bool GetKeyDown(int keyCode);
-	bool GetKeyUp(int keyCode);
+	
 
 	// 엔진 종료 함수
+	void CleanUp();
 	void Quit();
 
 	void AddLevel(Level* newLevel);
@@ -55,8 +42,6 @@ public:
 
 #pragma region 내부 함수
 private:
-	void ProcessInput();
-
 	void BeginPlay();
 	void Tick(float deltaTime = 0.0f);
 	void Render();
@@ -70,8 +55,8 @@ private:
 #pragma region 맴버 변수
 private:
 	bool isQuit = false;
-	KeyState _keyStates[256];
 	Level* _mainLevel = nullptr;
+	Input _input;
 #pragma endregion
 };
 

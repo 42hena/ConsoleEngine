@@ -32,35 +32,35 @@ void TestActor::Tick(float deltaTime)
 	super::Tick(deltaTime);
 
 	// std::cout << "TestActor::Tick. FPS: " << (1.0f / deltaTime) << "\n";
-	if (Engine::GetInstance().GetKeyDown(VK_RIGHT) && (Position()._x < 30))
+	if (Input::GetInstance().GetKeyDown(VK_RIGHT) && (Position()._x < 30))
 	{
 		Vector2 position = Position();
 		position._x += 1;
 		SetPosition(position);
 	}
 
-	if (Engine::GetInstance().GetKeyDown(VK_LEFT) && (Position()._x > 0))
+	if (Input::GetInstance().GetKeyDown(VK_LEFT) && (Position()._x > 0))
 	{
 		Vector2 position = Position();
 		position._x -= 1;
 		SetPosition(position);
 	}
 
-	if (Engine::GetInstance().GetKeyDown(VK_UP) && (Position()._y > 0))
+	if (Input::GetInstance().GetKeyDown(VK_UP) && (Position()._y > 0))
 	{
 		Vector2 position = Position();
 		position._y -= 1;
 		SetPosition(position);
 	}
 
-	if (Engine::GetInstance().GetKeyDown(VK_DOWN) && (Position()._y < 20))
+	if (Input::GetInstance().GetKeyDown(VK_DOWN) && (Position()._y < 20))
 	{
 		Vector2 position = Position();
 		position._y += 1;
 		SetPosition(position);
 	}
 
-	if (Engine::GetInstance().GetKeyDown(VK_ESCAPE))
+	if (Input::GetInstance().GetKeyDown(VK_ESCAPE))
 	{
 		Engine::GetInstance().Quit();
 	}

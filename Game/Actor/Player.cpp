@@ -20,32 +20,32 @@ void Player::Tick(float deltaTime)
 	super::Tick(deltaTime);
 
 	// ESC 키 입력
-	if (Engine::GetInstance().GetKeyDown(VK_ESCAPE))
+	if (Input::GetInstance().GetKeyDown(VK_ESCAPE))
 	{
 		Engine::GetInstance().Quit();
 		return;
 	}
 
 	// 방향키 입력 처리
-	if (Engine::GetInstance().GetKeyDown(VK_RIGHT))
+	if (Input::GetInstance().GetKeyDown(VK_RIGHT))
 	{ 
 		Vector2 position = Position();
 		position._x += 1;
 		SetPosition(position);
 	}
-	if (Engine::GetInstance().GetKeyDown(VK_LEFT))
+	if (Input::GetInstance().GetKeyDown(VK_LEFT))
 	{ 
 		Vector2 position = Position();
 		position._x -= 1;
 		SetPosition(position);
 	}
-	if (Engine::GetInstance().GetKeyDown(VK_UP))
+	if (Input::GetInstance().GetKeyDown(VK_UP))
 	{
 		Vector2 position = Position();
 		position._y -= 1;
 		SetPosition(position);
 	}
-	if (Engine::GetInstance().GetKeyDown(VK_DOWN))
+	if (Input::GetInstance().GetKeyDown(VK_DOWN))
 	{
 		Vector2 position = Position();
 		position._y += 1;
