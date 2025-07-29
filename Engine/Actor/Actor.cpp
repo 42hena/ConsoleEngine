@@ -1,8 +1,11 @@
+#include "Engine.h"
 #include "Actor.h"
+
+#include "Utils/Utils.h"
 
 #include <iostream>
 #include <Windows.h>
-#include "Utils/Utils.h"
+
 /*
 *		특수 맴버 함수
 */
@@ -78,4 +81,19 @@ Vector2 Actor::Position() const
 void Actor::SetSortingOrder(unsigned int sortingOrder)
 {
 	_sortingOrder = sortingOrder;
+}
+
+void Actor::SetOwner(Level* newOwner)
+{
+	_owner = newOwner;
+}
+
+Level* Actor::GetOnwer()
+{
+	return _owner;
+}
+
+void Actor::QuitGame()
+{
+	Engine::GetInstance().Quit();
 }
