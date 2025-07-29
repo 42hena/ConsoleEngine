@@ -2,6 +2,10 @@
 
 #include "Level/Level.h"
 
+#include "Utils/Utils.h"
+
+#include "Input.h"
+
 #include <iostream>
 #include <Windows.h>
 
@@ -10,6 +14,19 @@
 */
 
 Engine* Engine::_static_instance = nullptr;
+
+BOOL /*WINAPI*/ ConsoleMessageProcedure(DWORD ctrlType)
+{
+	switch (ctrlType)
+	{
+	case CTRL_CLOSE_EVENT:
+		Engine::GetInstance().CleanUp();
+		return false;
+	default:
+		break;
+	}
+	return false;
+}
 
 /*
 *		특수 맴버 함수
@@ -24,11 +41,13 @@ Engine::Engine()
 	info.dwSize = 1;// 찾아보기
 
 	// 콘솔 커서 끄기
+	
 	SetConsoleCursorInfo(
 		GetStdHandle(STD_OUTPUT_HANDLE),
 		&info
 	);
 
+	SetConsoleCtrlHandler(ConsoleMessageProcedure, true);
 	// 모든 텍스트 색상이 변경.
 	/*SetConsoleTextAttribute(
 		GetStdHandle(STD_OUTPUT_HANDLE),
@@ -38,12 +57,8 @@ Engine::Engine()
 
 Engine::~Engine()
 {
-	if (_mainLevel != nullptr)
-	{
-		delete _mainLevel;
-		_mainLevel = nullptr;
-	}
-	std::cout << "Engine 삭제\n";
+	if (false)
+		CleanUp();
 }
 
 /*
@@ -79,7 +94,7 @@ void Engine::Run()
 		times = currentTime.QuadPart - previousTime.QuadPart;
 		float deltaTime = times / (float)frequency.QuadPart;
 
-		ProcessInput();
+		_input.ProcessInput();
 		if (deltaTime >= oneFrameTime)
 		{
 			BeginPlay();
@@ -90,33 +105,18 @@ void Engine::Run()
 			previousTime = currentTime;
 
 			// 현재 프레임의 입력을 기록
-			for (int i = 0; i < 256; ++i)
-			{
-				_keyStates[i]._previousKeyDown = _keyStates[i]._isKeyDown;
-			}
+			_input.SavePreviousKeyStates();
 		}
 	}
 
-	// 정리 작업.
-	SetConsoleTextAttribute(
-		GetStdHandle(STD_OUTPUT_HANDLE),
-		FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED
-	);
+	// Console 출력 색 원래대로 변경
+	Utils::SetConsoleTextColor(FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
 }
 
-bool Engine::GetKey(int keyCode)
+void Engine::CleanUp()
 {
-	return _keyStates[keyCode]._isKeyDown;
-}
-
-bool Engine::GetKeyDown(int keyCode)
-{
-	return !_keyStates[keyCode]._previousKeyDown && _keyStates[keyCode]._isKeyDown;
-}
-
-bool Engine::GetKeyUp(int keyCode)
-{
-	return _keyStates[keyCode]._previousKeyDown && !_keyStates[keyCode]._isKeyDown;
+	SafeDelete(_mainLevel);
+	std::cout << "Engine 삭제\n";
 }
 
 void Engine::Quit()
@@ -138,19 +138,6 @@ void Engine::AddLevel(Level* newLevel)
 /*
 *		Engine의 내부 함수
 */
-
-void Engine::ProcessInput()
-{
-	for (int i = 0; i < 255; ++i)
-	{
-		_keyStates[i]._isKeyDown = GetAsyncKeyState(i) & 0x8000;
-	}
-
-	/*if (GetAsyncKeyState(VK_ESCAPE) & 0x8000)
-	{
-		Quit();
-	}*/
-}
 
 void Engine::BeginPlay()
 {
@@ -190,10 +177,8 @@ void Engine::Tick(float deltaTime)
 
 void Engine::Render()
 {
-	SetConsoleTextAttribute(
-		GetStdHandle(STD_OUTPUT_HANDLE),
-		FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED
-	);
+	// Console 출력 색 변경
+	Utils::SetConsoleTextColor(FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
 
 	if (_mainLevel != nullptr)
 	{

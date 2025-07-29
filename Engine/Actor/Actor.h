@@ -14,6 +14,7 @@ enum class Color : int
 	Color_Intensity = 8,
 };
 
+class Level;
 class ENGINE_API Actor : public RTTI
 {
 	friend class Level;
@@ -41,6 +42,13 @@ public:
 
 	void SetSortingOrder(unsigned int sortingOrder);
 	
+	/* Owner 관련 함수 */
+	void	SetOwner(Level* newOwner);
+	Level*	GetOnwer();
+
+	/* 종료 함수 */
+	void QuitGame();
+
 	/*
 	*		인라인 함수
 	*/
@@ -54,6 +62,7 @@ private:
 	bool	_hasBeginPlay = false;
 	Color	_color;
 	unsigned int _sortingOrder = 0;
+	Level*	_owner = nullptr;
 #pragma endregion
 };
 

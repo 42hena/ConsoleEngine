@@ -37,7 +37,7 @@ private:
 #pragma endregion
 
 #pragma region ¸â¹ö º¯¼ö
-private:
+protected:
 	std::vector<Actor*> _actors;
 #pragma endregion
 };

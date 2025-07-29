@@ -1,7 +1,11 @@
+#include "Engine.h"
 #include "Actor.h"
+
+#include "Utils/Utils.h"
 
 #include <iostream>
 #include <Windows.h>
+
 /*
 *		특수 맴버 함수
 */
@@ -35,20 +39,18 @@ void Actor::Tick(float deltaTime)
 
 void Actor::Render()
 {
-	// Window API를 이용하여 콘솔 출력을 제어하는 핸들 얻기
-	static HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
-	
 	// 커서 위치 값 생성
 	COORD coord;
 	coord.X = static_cast<short>(_position._x);
 	coord.Y = static_cast<short>(_position._y);
 	
 	// 커서 이동
-	SetConsoleCursorPosition(handle, coord);
+	Utils::SetConsolePosition(coord);
 
 	// 색상 변경
-	SetConsoleTextAttribute(handle, static_cast<WORD>(_color));
+	Utils::SetConsoleTextColor(static_cast<WORD>(_color));
 
+	// console 창 출력하여 그리기
 	std::cout << _image;
 }
 
@@ -62,8 +64,12 @@ void Actor::SetPosition(const Vector2& newPosition)
 	coord.Y = static_cast<short>(_position._y);
 
 	// 커서 이동
-	SetConsoleCursorPosition(handle, coord);
+	Utils::SetConsolePosition(coord);
+
+	// console 창 출력하여 그리기
 	std::cout << ' ';
+	
+	// 이동하려는 위치로 변경
 	_position = newPosition;
 }
 
@@ -75,4 +81,19 @@ Vector2 Actor::Position() const
 void Actor::SetSortingOrder(unsigned int sortingOrder)
 {
 	_sortingOrder = sortingOrder;
+}
+
+void Actor::SetOwner(Level* newOwner)
+{
+	_owner = newOwner;
+}
+
+Level* Actor::GetOnwer()
+{
+	return _owner;
+}
+
+void Actor::QuitGame()
+{
+	Engine::GetInstance().Quit();
 }
