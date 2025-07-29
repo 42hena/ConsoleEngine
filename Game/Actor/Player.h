@@ -14,8 +14,11 @@ public:
 
 #pragma region 이벤트 함수
 public:
+	virtual void BeginPlay() override;
 	virtual void Tick(float deltaTime) override;
 #pragma endregion
+private:
+	class ICanPlayerMove* _canPlayerMoveInterface = nullptr;
 };
 
 #endif
