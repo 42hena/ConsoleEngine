@@ -11,7 +11,7 @@ class ENGINE_API Engine
 #pragma region 특수 맴버 함수
 public:
 	Engine();
-	~Engine();
+	virtual ~Engine();
 
 public:
 	Engine(const Engine&)				= delete;
@@ -27,23 +27,22 @@ public:
 
 #pragma region 공개 함수
 public:
-	// 엔진 실행 함수
+	/* Engine 관련 함수 */
 	void Run();
-
-	
-
-	// 엔진 종료 함수
-	void CleanUp();
+	virtual void CleanUp();
 	void Quit();
 
+	/* Level 관련 함수*/
 	void AddLevel(Level* newLevel);
-
 #pragma endregion
 
 #pragma region 내부 함수
 private:
+	/* 이벤트 함수 */
 	void BeginPlay();
 	void Tick(float deltaTime = 0.0f);
+
+	/* Draw 함수 */
 	void Render();
 #pragma endregion
 
@@ -53,7 +52,7 @@ private:
 #pragma endregion
 
 #pragma region 맴버 변수
-private:
+protected:
 	bool isQuit = false;
 	Level* _mainLevel = nullptr;
 	Input _input;
